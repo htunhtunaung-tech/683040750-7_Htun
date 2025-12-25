@@ -6,8 +6,9 @@ class BankAccount:
     last_saving_number = 0
 
     # Private class attributes (account types)
-    __type_saving = 1
-    __type_loan = 2
+    __type_saving = 1   # Code for saving account
+    __type_loan = 2     # Code for loan account
+
 
     # Constructor
     def __init__(self, name, acc_type="saving", balance=0):
@@ -20,14 +21,17 @@ class BankAccount:
 
         # Generate account number
         if acc_type == "saving":
+            # Increase saving running number
             BankAccount.last_saving_number += 1
             running = BankAccount.last_saving_number
             type_code = BankAccount.__type_saving
         else:
+            # Increase loan running number
             BankAccount.last_loan_number += 1
             running = BankAccount.last_loan_number
             type_code = BankAccount.__type_loan
-
+            
+        # Create account number in format: branch-type-running
         self.account_number = f"{BankAccount.branch_number}-{type_code}-{running}"
 
     # Instance methods
@@ -40,24 +44,9 @@ class BankAccount:
         print("----- End Record -----")
 
     def deposit(self, amount=0):
-        self.balance += amount
-        return self.balance
+        self.balance += amount   # Add amount to balance
+        return self.balance      # Return updated balance
 
     def pay_loan(self, amount=0):
-        self.balance += amount
-        return self.balance
-
-john = BankAccount("John", "saving", 500)
-tim = BankAccount("Tim", "loan", -1_000_000)
-sarah = BankAccount("Sarah", "saving")
-
-john.deposit(3000)
-tim.pay_loan(500_000)
-
-sarah.deposit(50_000_000)
-sarah_loan = BankAccount("Sarah", "loan", -100_000_000)
-
-john.print_customer()
-tim.print_customer()
-sarah.print_customer()
-sarah_loan.print_customer()
+        self.balance += amount # Paying loan reduces debt
+        return self.balance    # Return updated balance
