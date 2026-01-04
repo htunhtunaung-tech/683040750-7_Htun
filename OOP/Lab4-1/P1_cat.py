@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from cat import Cat   # import the Cat class
 
-# Add 3 cats (arguments of your choice)
 cat1 = Cat("Milo", "British Shorthair", 2, "Alice")
 cat2 = Cat("Luna", "Siamese", 3, "Bob")
 cat3 = Cat("Oliver", "Persian", 1, "Chris")

@@ -1,19 +1,22 @@
-from BankAccount import BankAccount   # import class from another file
+from cat import Cat
 
-# Create accounts
-john = BankAccount("John", "saving", 500)
-tim = BankAccount("Tim", "loan", -1_000_000)
-sarah = BankAccount("Sarah", "saving")
+# Create cats
+cat1 = Cat("Milo", 3, "British Shorthair", "Gray")
+cat2 = Cat.from_birth_year("Luna", 2016, "Siamese", "White")
 
-# Transactions
-john.deposit(3000)
-tim.pay_loan(500_000)
+# Interactions
+print(cat1.meow())
+print(cat1.play(10))
+print(cat1.eat(15))
+print(cat1.sleep(5))
 
-sarah.deposit(50_000_000)
-sarah_loan = BankAccount("Sarah", "loan", -100_000_000)
+# Status
+print("Cat 1 status:", cat1.get_status())
 
-# Print customer information
-john.print_customer()
-tim.print_customer()
-sarah.print_customer()
-sarah_loan.print_customer()
+# Class method usage
+print("Species info:", Cat.get_species_info())
+print("Total cats:", Cat.total_cats)
+
+# Static method usage
+print("Is Luna senior?", Cat.is_senior(cat2.age))
+print("Recommended food (4kg):", Cat.calculate_healthy_food_amount(4), "grams")
