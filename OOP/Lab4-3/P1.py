@@ -1,7 +1,3 @@
-"""Htun Htun Aung
-683040750-7
-"""
-
 from datetime import datetime
 
 # ===================== BASE CLASS =====================
@@ -37,16 +33,15 @@ class Book(LibraryItem):
     def __init__(self, title, item_id, author):
         super().__init__(title, item_id)
         self.author = author
-        self.pages_count = 0  # non-parameter attribute
+        self.pages_count = 0
 
     def set_pages_count(self, pages):
         self.pages_count = pages
 
     def display_info(self):
-        print(f"Title: {self.title}")
+        super().display_info()      # polymorphism
         print(f"Author: {self.author}")
         print(f"Pages: {self.pages_count}")
-        print(f"Status: {self.get_status()}")
 
 
 # ===================== TEXTBOOK CLASS =====================
@@ -57,12 +52,9 @@ class TextBook(Book):
         self.grade_level = grade_level
 
     def display_info(self):
-        print(f"Title: {self.title}")
-        print(f"Author: {self.author}")
-        print(f"Pages: {self.pages_count}")
+        super().display_info()      # polymorphism
         print(f"Subject: {self.subject}")
         print(f"Grade Level: {self.grade_level}")
-        print(f"Status: {self.get_status()}")
 
 
 # ===================== MAGAZINE CLASS =====================
@@ -76,28 +68,22 @@ class Magazine(LibraryItem):
         self.year = now.year
 
     def display_info(self):
-        print(f"Title: {self.title}")
-        print(f"ID: {self._id}")
+        super().display_info()      # polymorphism
         print(f"Issue Number: {self.issue_number}")
         print(f"Month: {self.month}")
         print(f"Year: {self.year}")
-        print(f"Status: {self.get_status()}")
 
 
-# ===================== TEST PROGRAM =====================
-print("----- Book Test -----")
-book = Book("Harry Potter", "B001", "J.K. Rowling")
-book.set_pages_count(350)
-book.display_info()
-book.check_out()
-print("After checkout:")
-book.display_info()
+# ===================== POLYMORPHISM TEST =====================
+items = [
+    Book("Harry Potter", "B001", "J.K. Rowling"),
+    TextBook("Physics", "T101", "Resnick", "Science", "Grade 10"),
+    Magazine("National Geographic", "M202", 45)
+]
 
-print("\n----- TextBook Test -----")
-textbook = TextBook("Physics", "T101", "Resnick", "Science", "Grade 10")
-textbook.set_pages_count(500)
-textbook.display_info()
+items[0].set_pages_count(350)
+items[1].set_pages_count(500)
 
-print("\n----- Magazine Test -----")
-magazine = Magazine("National Geographic", "M202", 45)
-magazine.display_info()
+for item in items:
+    print("\n--- Item Info ---")
+    item.display_info()
