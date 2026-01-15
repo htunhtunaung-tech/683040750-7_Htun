@@ -51,21 +51,29 @@ class Kitchen(Room):
     
     def calculate_counter_space(self):
         """
-        Calculates the amount of counter space in the kitchen.
+        Calculates the counter space distribution in the kitchen.
 
-        The calculation depends on whether the kitchen has an island:
-        - If the kitchen has an island:
-            * Island counter space = 1/5 of the total kitchen area
-            * Wall counter space = 1/4 of the total kitchen area
-        - If the kitchen does not have an island:
-        * Island counter space = 0
-        * Wall counter space = 1/2 of the total kitchen area
+        Parameters
+        ----------
+        self : Kitchen
+        The Kitchen object for which counter space is calculated
 
-        Returns:
-            tuple: A tuple containing:
-                - island_counter (float): Counter space from the island
-                - wall_counter (float): Counter space along the walls
+        Returns
+        -------
+        tuple
+        A tuple containing:
+            - island_counter : float
+        Counter space from the kitchen island (0 if no island)
+            - wall_counter : float
+        Counter space along the kitchen walls
+
+        Examples
+        --------
+        >>> kitchen = Kitchen(15, 12)
+        >>> kitchen.calculate_counter_space()
+        (36.0, 45.0)
         """
+
         area = self.calculate_area()
         
         if self.has_island:
