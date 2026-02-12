@@ -1,3 +1,9 @@
+"""
+Htun Htun Aung
+683040750-7
+P1 Lab5_2
+"""
+
 import sys
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
@@ -29,24 +35,27 @@ class MainWindow(QMainWindow):
         title.setFont(QFont("Arial", 12, QFont.Bold))
         main_layout.addWidget(title)
 
-        # Input & Output sections
+        # Sections
         self.output_section = OutputSection()
         self.input_section = InputSection(self.output_section)
 
-        main_layout.addLayout(self.input_section)
+        main_layout.addWidget(self.input_section)
 
-        # Result container with linen color
+        # Result container
         result_container = QWidget()
         result_container.setStyleSheet("background-color:#FAF0E6;")
-        result_container.setLayout(self.output_section)
+        container_layout = QVBoxLayout(result_container)
+        container_layout.addWidget(self.output_section)
+
         main_layout.addWidget(result_container)
 
 
-class InputSection(QVBoxLayout):
+class InputSection(QWidget):
     def __init__(self, output_section):
         super().__init__()
         self.output_section = output_section
 
+        main_layout = QVBoxLayout(self)
         form = QFormLayout()
 
         # Age group
@@ -72,7 +81,7 @@ class InputSection(QVBoxLayout):
         h_layout.addWidget(self.height_unit)
         form.addRow("Height:", h_layout)
 
-        self.addLayout(form)
+        main_layout.addLayout(form)
 
         # Buttons
         btn_layout = QHBoxLayout()
@@ -80,7 +89,7 @@ class InputSection(QVBoxLayout):
         submit_btn = QPushButton("Submit Registration")
         btn_layout.addWidget(clear_btn)
         btn_layout.addWidget(submit_btn)
-        self.addLayout(btn_layout)
+        main_layout.addLayout(btn_layout)
 
         clear_btn.clicked.connect(self.clear_form)
         submit_btn.clicked.connect(self.submit_reg)
@@ -89,14 +98,13 @@ class InputSection(QVBoxLayout):
         weight = float(self.weight_edit.text())
         height = float(self.height_edit.text())
 
-        # Convert units
         if self.weight_unit.currentText() == lb:
-            weight = weight * 0.453592  # lb to kg
+            weight *= 0.453592
 
         if self.height_unit.currentText() == cm:
-            height = height / 100  # cm to meters
+            height /= 100
         elif self.height_unit.currentText() == ft:
-            height = height * 0.3048  # feet to meters
+            height *= 0.3048
 
         bmi = weight / (height ** 2)
         return round(bmi, 2)
@@ -107,7 +115,7 @@ class InputSection(QVBoxLayout):
             age_group = self.age_combo.currentText()
             self.output_section.update_results(bmi, age_group)
         except:
-            QMessageBox.warning(None, "Error", "Please enter valid numbers!")
+            QMessageBox.warning(self, "Error", "Please enter valid numbers!")
 
     def clear_form(self):
         self.weight_edit.clear()
@@ -115,27 +123,27 @@ class InputSection(QVBoxLayout):
         self.output_section.clear_result()
 
 
-class OutputSection(QVBoxLayout):
+class OutputSection(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.addStretch()
+        main_layout = QVBoxLayout(self)
 
         self.label_title = QLabel("Your BMI")
         self.label_title.setAlignment(Qt.AlignCenter)
         self.label_title.setFont(QFont("Arial", 11))
-        self.addWidget(self.label_title)
+        main_layout.addWidget(self.label_title)
 
         self.bmi_label = QLabel("0.00")
         self.bmi_label.setAlignment(Qt.AlignCenter)
         self.bmi_label.setFont(QFont("Arial", 26, QFont.Bold))
         self.bmi_label.setStyleSheet("color:#3A5AFF;")
-        self.addWidget(self.bmi_label)
+        main_layout.addWidget(self.bmi_label)
 
         self.extra_layout = QVBoxLayout()
-        self.addLayout(self.extra_layout)
+        main_layout.addLayout(self.extra_layout)
 
-        self.addStretch()
+        main_layout.addStretch()
 
     def update_results(self, bmi, age_group):
         self.clear_extra()
@@ -181,7 +189,6 @@ class OutputSection(QVBoxLayout):
 
         link_layout.addWidget(boy)
         link_layout.addWidget(girl)
-
         self.extra_layout.addLayout(link_layout)
 
     def clear_result(self):
