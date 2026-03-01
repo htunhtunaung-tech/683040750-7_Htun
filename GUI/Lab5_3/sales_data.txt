@@ -1,48 +1,49 @@
-Mar,Electronics,21500
-Jul,Food,9800
-Jan,Clothing,7200
-Nov,Electronics,31000
-Apr,Others,3400
-Sep,Clothing,12800
-Feb,Food,8500
-Jun,Electronics,24000
-Dec,Clothing,18500
-Aug,Others,4100
-May,Food,10200
-Oct,Electronics,28500
-Jan,Electronics,18000
-Mar,Clothing,8100
-Jul,Electronics,26500
-Feb,Clothing,6800
-Nov,Food,13500
-Apr,Electronics,22500
-Sep,Others,4800
-Dec,Food,15000
-Jun,Clothing,11200
-Aug,Food,9500
-May,Electronics,23000
-Oct,Clothing,14500
-Feb,Others,2800
-Jan,Food,9200
-Mar,Others,3100
-Jul,Clothing,10500
-Nov,Clothing,16000
-Apr,Food,9800
-Sep,Electronics,27000
-Dec,Others,6200
-Jun,Others,3800
-Aug,Electronics,25500
-May,Clothing,9800
-Oct,Others,5100
-Jan,Others,2500
-Feb,Electronics,19500
-Mar,Food,8800
-Apr,Clothing,8500
-May,Others,3200
-Jun,Food,10800
-Jul,Others,4500
-Aug,Clothing,11000
-Sep,Food,11500
-Oct,Food,12200
-Nov,Others,5500
-Dec,Electronics,35000
+# Month, Sales Amount, Category
+Jan, 17800, Electronics
+Jan, 7200, Clothing
+Jan, 9400, Food
+Jan, 2500, Others
+Feb, 19500, Electronics
+Feb, 6800, Clothing
+Feb, 8500, Food
+Feb, 2800, Others
+Mar, 21500, Electronics
+Mar, 7800, Clothing
+Mar, 9200, Food
+Mar, 2600, Others
+Apr, 22800, Electronics
+Apr, 8500, Clothing
+Apr, 10000, Food
+Apr, 1800, Others
+May, 23500, Electronics
+May, 9800, Clothing
+May, 10200, Food
+May, 1500, Others
+Jun, 24000, Electronics
+Jun, 11000, Clothing
+Jun, 11500, Food
+Jun, 3800, Others
+Jul, 26500, Electronics
+Jul, 10400, Clothing
+Jul, 9800, Food
+Jul, 4700, Others
+Aug, 25500, Electronics
+Aug, 11000, Clothing
+Aug, 9300, Food
+Aug, 3900, Others
+Sep, 27000, Electronics
+Sep, 13200, Clothing
+Sep, 11500, Food
+Sep, 4800, Others
+Oct, 26500, Electronics
+Oct, 14500, Clothing
+Oct, 12200, Food
+Oct, 5000, Others
+Nov, 31000, Electronics
+Nov, 16000, Clothing
+Nov, 13500, Food
+Nov, 5200, Others
+Dec, 35000, Electronics
+Dec, 18500, Clothing
+Dec, 15000, Food
+Dec, 6200, Others
