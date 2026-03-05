@@ -20,16 +20,17 @@ from PySide6.QtCore import QRegularExpression
 class RoomCard(QWidget):
     room_selected = Signal(str, int)
 
-    def __init__(self, room_name: str, price: int, description: str, emoji: str = "🏨"):
+    def __init__(self, room_name: str, price: int, description: str, emoji: str = "🏨", max_guests: int = 1):
         super().__init__()
         self._is_selected = False
         self._room_name = room_name
         self._price = price
+        self._max_guests = max_guests
 
-        self._build_ui(room_name, price, emoji, description)
+        self._build_ui(room_name, price, emoji, description, max_guests)
         self.deselect()
 
-    def _build_ui(self, room_name: str, price: int, emoji: str, description: str):
+    def _build_ui(self, room_name: str, price: int, emoji: str, description: str, max_guests: int):
         self.setFixedSize(170, 200)
         self.setCursor(Qt.PointingHandCursor)
 
@@ -57,6 +58,11 @@ class RoomCard(QWidget):
         desc_lbl.setStyleSheet("color: #6b7280;")
         desc_lbl.setWordWrap(True)
 
+        capacity_lbl = QLabel(f"👤 Max {max_guests} guest(s)")
+        capacity_lbl.setFont(QFont("Segoe UI", 8))
+        capacity_lbl.setAlignment(Qt.AlignCenter)
+        capacity_lbl.setStyleSheet("color: #ef4444; font-weight: bold;")
+
         self.select_btn = QPushButton("Select Room")
         self.select_btn.setFixedHeight(30)
         self.select_btn.setCursor(Qt.PointingHandCursor)
@@ -66,6 +72,7 @@ class RoomCard(QWidget):
         layout.addWidget(name_lbl)
         layout.addWidget(price_lbl)
         layout.addWidget(desc_lbl)
+        layout.addWidget(capacity_lbl)
         layout.addStretch()
         layout.addWidget(self.select_btn)
 
@@ -188,6 +195,7 @@ class BookingPage(QWidget):
         super().__init__()
         self.selected_room = None
         self.selected_price = 0
+        self.selected_max_guests = 0
         self.cards = []
         self._build_ui()
 
@@ -227,7 +235,7 @@ class BookingPage(QWidget):
 
         # Input widgets
         self.name_input = QLineEdit()
-        self.name_input.setPlaceholderText("e.g. John Smith")
+        self.name_input.setPlaceholderText("e.g. Louis Htun")
 
         self.phone_input = QLineEdit()
         self.phone_input.setPlaceholderText("e.g. 081-234-5678")
@@ -292,18 +300,18 @@ class BookingPage(QWidget):
         main_layout.addWidget(room_title)
 
         rooms_data = [
-            ("Standard Room", 50,  "Single bed, Free Wi-Fi",             "🛏"),
-            ("Deluxe Room",   120, "Double bed, Ocean view, Wi-Fi",      "🌊"),
-            ("Suite Room",    250, "Living room, Jacuzzi, Premium view", "👑"),
-            ("Family Room",   160, "2 Bedrooms, Perfect for families",   "👨‍👩‍👧‍👦"),
+            ("Standard Room", 50,  "Single bed, Free Wi-Fi",             "🛏",  1),
+            ("Deluxe Room",   120, "Double bed, Ocean view, Wi-Fi",      "🌊",  2),
+            ("Suite Room",    250, "Living room, Jacuzzi, Premium view", "👑",  4),
+            ("Family Room",   160, "2 Bedrooms, Perfect for families",   "👨‍👩‍👧‍👦", 6),
         ]
 
         cards_layout = QHBoxLayout()
         cards_layout.setSpacing(14)
         cards_layout.setContentsMargins(0, 0, 0, 0)
 
-        for room_name, price, description, emoji in rooms_data:
-            card = RoomCard(room_name, price, description, emoji)
+        for room_name, price, description, emoji, max_guests in rooms_data:
+            card = RoomCard(room_name, price, description, emoji, max_guests)
             card.room_selected.connect(self._on_room_selected)
             self.cards.append(card)
             cards_layout.addWidget(card)
@@ -379,6 +387,7 @@ class BookingPage(QWidget):
         self.selected_price = price
         for card in self.cards:
             if card._room_name == room_name:
+                self.selected_max_guests = card._max_guests
                 card.select()
             else:
                 card.deselect()
@@ -391,6 +400,7 @@ class BookingPage(QWidget):
         self.guests_input.setValue(1)
         self.selected_room = None
         self.selected_price = 0
+        self.selected_max_guests = 0
         for card in self.cards:
             card.deselect()
 
@@ -413,6 +423,15 @@ class BookingPage(QWidget):
         if not self.selected_room:
             QMessageBox.warning(self, "No Room Selected",
                                 "Please select a room before proceeding.")
+            return None
+
+        guests = self.guests_input.value()
+        if guests > self.selected_max_guests:
+            QMessageBox.warning(
+                self, "Too Many Guests",
+                f"'{self.selected_room}' allows a maximum of {self.selected_max_guests} guest(s).\n"
+                f"You selected {guests} guest(s). Please reduce the number of guests or choose a different room."
+            )
             return None
 
         nights = checkin.daysTo(checkout)
