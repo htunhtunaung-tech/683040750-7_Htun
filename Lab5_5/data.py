@@ -1,0 +1,18 @@
+# Name: Htun Htun Aung
+# Student ID: [683040750-7]
+
+COURSES = [
+    "— Select Course —",
+    "CS101 · Intro to Programming",
+    "CS102 · Data Structures",
+    "CS201 · Algorithms",
+    "CS202 · Database Systems",
+    "CS301 · Operating Systems",
+    "CS302 · Computer Networks",
+    "CS401 · Machine Learning",
+    "CS402 · Software Engineering",
+    "MATH101 · Calculus I",
+    "MATH102 · Linear Algebra",
+    "ENG101 · Technical English",
+    "PHY101 · Physics I",
+]
